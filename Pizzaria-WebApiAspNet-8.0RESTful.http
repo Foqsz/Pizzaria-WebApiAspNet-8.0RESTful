@@ -1,0 +1,6 @@
+@Pizzaria_WebApiAspNet_8._0RESTful_HostAddress = http://localhost:5249
+
+GET {{Pizzaria_WebApiAspNet_8._0RESTful_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
