@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Pizza.API\Controllers\" />
-    <Folder Include="Pizza.Infraestucture\" />
     <Folder Include="Pizza.Core\" />
     <Folder Include="Pizza.Application\" />
   </ItemGroup>
