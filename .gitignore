@@ -1,0 +1,49 @@
+# Arquivos de configuração locais
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+secrets.json
+
+# Diretórios de build e binários
+bin/
+obj/
+
+# Diretórios e arquivos de pacote
+*.nupkg
+*.snupkg
+*.dotnet
+
+# Arquivos de usuário específicos e configurações do IDE
+*.user
+*.suo
+*.userosscache
+*.suo
+*.vscode/
+*.idea/
+*.vs/
+*.code-workspace
+
+# Diretórios de log
+logs/
+*.log
+
+# Arquivos de cache
+*.cache
+*.tmp
+*.swp
+*.swo
+
+# Arquivos gerados por ferramentas de teste
+test-results/
+*.testsettings
+*.testresults
+
+# Configurações específicas de IDE
+.vscode/
+.idea/
+
+# Ignorar arquivos específicos de macOS
+.DS_Store
+
+# Ignorar arquivos específicos de Windows
+Thumbs.db
