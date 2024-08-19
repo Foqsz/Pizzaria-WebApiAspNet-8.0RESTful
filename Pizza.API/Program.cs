@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs.Mappings;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Data;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,11 @@ builder.Services.AddDbContext<PizzariaContext>(options => options.UseMySql(mySql
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
+builder.Services.AddScoped<IPizzariaService, PizzariaService>();
+
+builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
+ 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

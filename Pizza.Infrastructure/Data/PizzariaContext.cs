@@ -9,6 +9,6 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Data
 
         public DbSet<PizzariaModel> Pizza { get; set; }
         public DbSet<PizzaCategoriaModel> CategoriaPizza { get; set; }
-
+ 
     }
 }
