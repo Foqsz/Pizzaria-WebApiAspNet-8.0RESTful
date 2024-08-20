@@ -15,25 +15,25 @@ public class PizzariaRepository : IPizzariaRepository
 
     public async Task<IEnumerable<PizzariaModel>> GetByAll()
     {
-        return await _context.Pizza.Include(p => p.Id).ToListAsync();
+        return await _context.Pizza.ToListAsync();
     }
 
-    public Task<PizzariaModel> GetById(int id)
+    public async Task<PizzariaModel> GetById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<PizzariaModel> GetByName(string name)
+    public async Task<PizzariaModel> GetByName(string name)
     {
         throw new NotImplementedException();
     }
 
-    public Task<PizzariaModel> GetPizzaRemove(int id)
+    public async Task<PizzariaModel> GetPizzaRemove(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<PizzariaModel> GetPizzaUpdate(PizzariaModel pizzariaDTO)
+    public async Task<PizzariaModel> GetPizzaUpdate(PizzariaModel pizzariaDTO)
     {
         throw new NotImplementedException();
     }

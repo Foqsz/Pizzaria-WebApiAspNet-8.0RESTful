@@ -1,12 +1,13 @@
 {
   "profiles": {
-    "Pizzaria-WebApiAspNet-8.0RESTful": {
+    "PizzariaApi": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "https://localhost:7017/swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:52176;http://localhost:52177"
+      "applicationUrl": "https://localhost:7017;"
     }
   }
 }

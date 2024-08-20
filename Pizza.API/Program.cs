@@ -19,10 +19,10 @@ builder.Services.AddDbContext<PizzariaContext>(options => options.UseMySql(mySql
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
 builder.Services.AddScoped<IPizzariaService, PizzariaService>();
+builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
 
-builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
+//builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
  
 var app = builder.Build();
 
@@ -30,7 +30,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pizzaria API V1"));
 }
 
 app.UseHttpsRedirection();
