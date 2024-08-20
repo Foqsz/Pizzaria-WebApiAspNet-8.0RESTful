@@ -28,4 +28,15 @@ public class PizzariaController : ControllerBase
         }
         return Ok(Pizza); 
     }
+
+    [HttpPost]
+    public async Task<ActionResult<PizzariaDTO>> GetPizzaById(int id)
+    {
+        var PizzaId = await _pizzaria.GetPizzaById(id);
+        if (PizzaId is null)
+        {
+            return NotFound("Não foi possível localizar essa pizza em nosso cardápio.");
+        }
+        return Ok($"Pizza encontrada em nosso cardápio. Confira: {PizzaId}");
+    }
 }

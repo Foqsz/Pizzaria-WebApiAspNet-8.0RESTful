@@ -23,7 +23,8 @@ public class PizzariaService : IPizzariaService
 
     public async Task<PizzariaDTO> GetPizzaById(int id)
     {
-        throw new NotImplementedException();
+        var pizzaId = await _pizzariaRepository.GetById(id);
+        return _mapper.Map<PizzariaDTO>(pizzaId);
     }
 
     public async Task<PizzariaDTO> GetPizzaEdit(PizzariaDTO pizzaDTO)

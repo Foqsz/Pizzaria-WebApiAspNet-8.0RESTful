@@ -20,7 +20,7 @@ public class PizzariaRepository : IPizzariaRepository
 
     public async Task<PizzariaModel> GetById(int id)
     {
-        throw new NotImplementedException();
+        return _context.Pizza.FirstOrDefault(p => p.Id == id);
     }
 
     public async Task<PizzariaModel> GetByName(string name)
