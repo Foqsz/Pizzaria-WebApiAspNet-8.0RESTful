@@ -9,5 +9,7 @@ public interface IPizzariaRepository
     Task<PizzariaModel> GetByName(string name);
     Task<IEnumerable<PizzariaModel>> GetByAll();
     Task<PizzariaModel> GetPizzaUpdate(PizzariaModel pizzariaDTO);
+    Task<PizzariaModel> GetPizzaCreate(PizzariaModel pizzariaDTO);
     Task<PizzariaModel> GetPizzaRemove(int id);
+
 }
