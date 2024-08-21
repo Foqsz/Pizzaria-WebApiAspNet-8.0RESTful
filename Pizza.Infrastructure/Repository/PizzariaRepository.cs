@@ -36,8 +36,10 @@ public class PizzariaRepository : IPizzariaRepository
         return pizzariaDTO;
     }
     public async Task<PizzariaModel> GetPizzaUpdate(PizzariaModel pizzariaDTO)
-    {
-        throw new NotImplementedException();
+    {  
+        var pizzaUpdate = _context.Pizza.Update(pizzariaDTO);
+        await _context.SaveChangesAsync();
+        return pizzaUpdate.Entity;
     }
 
     public async Task<PizzariaModel> GetPizzaRemove(int id)

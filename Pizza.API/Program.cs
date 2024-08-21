@@ -19,6 +19,8 @@ builder.Services.AddDbContext<PizzariaContext>(options => options.UseMySql(mySql
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
+
 builder.Services.AddScoped<IPizzariaService, PizzariaService>();
 builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
 

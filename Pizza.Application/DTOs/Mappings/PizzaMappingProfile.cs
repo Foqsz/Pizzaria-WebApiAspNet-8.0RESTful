@@ -7,7 +7,7 @@ public class PizzaMappingProfile : Profile
 {
     public PizzaMappingProfile()
     {
-        CreateMap<PizzariaModel, PizzariaDTO>();
-        CreateMap<PizzaCategoriaModel, PizzaCategoriaDTO>();
+        CreateMap<PizzariaModel, PizzariaDTO>().ReverseMap();
+        CreateMap<PizzaCategoriaModel, PizzaCategoriaDTO>().ReverseMap();
     }
 }

@@ -1,4 +1,4 @@
-﻿using AutoMapper; 
+﻿using AutoMapper;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
@@ -39,9 +39,23 @@ public class PizzariaService : IPizzariaService
         return _mapper.Map<PizzariaDTO>(pizzaCreate);
     }
 
-    public async Task<PizzariaDTO> GetPizzaEdit(PizzariaDTO pizzaDTO)
-    {
-        throw new NotImplementedException();
+    public async Task<PizzariaDTO> GetPizzaEdit(int id, PizzariaDTO pizzaDTO)
+    { 
+        var PizzaExist = await _pizzariaRepository.GetById(id);
+
+        if (PizzaExist == null)
+        {
+            throw new KeyNotFoundException("Pizza não encontrada em nosso cardápio.");
+        }
+
+        //1 Atualizando com Dto
+        var pizzaToUpdate = _mapper.Map(pizzaDTO, PizzaExist);
+
+        //2 Atualizando no repositorio
+        var updatedPizza = await _pizzariaRepository.GetPizzaUpdate(pizzaToUpdate);
+
+        //3 Mapeando para Dto
+        return _mapper.Map<PizzariaDTO>(updatedPizza);
     }
 
     public async Task<PizzariaDTO> GetRemovePizza(int id)

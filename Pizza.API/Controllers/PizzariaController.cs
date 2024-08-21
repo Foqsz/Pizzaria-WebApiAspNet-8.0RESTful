@@ -54,7 +54,7 @@ public class PizzariaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate(PizzariaModel pizzariaDTO)
+    public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaModel pizzariaDTO)
     {
         var pizzaNew = await _pizzaria.GetPizzaNew(pizzariaDTO);
         if (pizzaNew is null)
@@ -65,7 +65,18 @@ public class PizzariaController : ControllerBase
 
     }
 
-    [HttpDelete("{id}")]
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult> GetPizzaUpdate(int id, [FromBody]PizzariaDTO pizzariaDTO)
+    {
+        if (id != pizzariaDTO.Id)
+        {
+            return BadRequest($"A Pizza de ID = {id} é diferente da Pizza que deseja editar no cardápio.");
+        }
+        var PizzaAtt = await _pizzaria.GetPizzaEdit(id, pizzariaDTO);
+        return Ok("Pizza alterada com sucesso em nosso cardápio.");
+    }
+
+    [HttpDelete("{id:int}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaRemove(int id)
     {
         var pizzaRemove = await _pizzaria.GetRemovePizza(id);
