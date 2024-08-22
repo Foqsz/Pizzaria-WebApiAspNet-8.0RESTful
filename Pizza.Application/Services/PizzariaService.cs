@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository.Interfaces;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
 

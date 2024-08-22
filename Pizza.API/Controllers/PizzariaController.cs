@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
-using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;

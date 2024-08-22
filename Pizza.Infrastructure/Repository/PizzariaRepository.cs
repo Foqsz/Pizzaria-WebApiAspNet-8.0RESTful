@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Data;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository.Interfaces;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
 

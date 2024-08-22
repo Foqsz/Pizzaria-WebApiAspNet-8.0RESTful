@@ -1,7 +1,7 @@
 ﻿using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 
-namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
+namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
 
 public interface IPizzariaService
 {
