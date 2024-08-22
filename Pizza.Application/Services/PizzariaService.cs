@@ -30,7 +30,7 @@ public class PizzariaService : IPizzariaService
     public async Task<PizzariaDTO> GetPizzaNameByName(string sabor)
     {
         var pizzaName = await _pizzariaRepository.GetByName(sabor);
-        return _mapper.Map<PizzariaDTO>(sabor);
+        return _mapper.Map<PizzariaDTO>(pizzaName);
     }
 
     public async Task<PizzariaDTO> GetPizzaNew(PizzariaModel pizzaDTO)
@@ -48,7 +48,7 @@ public class PizzariaService : IPizzariaService
             throw new KeyNotFoundException("Pizza não encontrada em nosso cardápio.");
         }
 
-        //1 Atualizando com Dto
+        //1 Atualizando com Dto (PizzaDto são os novos dados que recebo e PizzaExist são os dados atuais que busquei)
         var pizzaToUpdate = _mapper.Map(pizzaDTO, PizzaExist);
 
         //2 Atualizando no repositorio

@@ -41,7 +41,7 @@ public class PizzariaController : ControllerBase
         return Ok($"Pizza encontrada em nosso cardápio. Confira: {PizzaId.Sabor}, {PizzaId.Descricao}");
     }
 
-    [HttpGet("Cardápio/{sabor}")]
+    [HttpGet("Cardápio/{string}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaName(string sabor)
     {
         var pizzaName = await _pizzaria.GetPizzaNameByName(sabor);
@@ -49,7 +49,7 @@ public class PizzariaController : ControllerBase
         {
             return NotFound($"A Pizza de {sabor} não foi encontrada em nosso cardápio.");
         }
-        return Ok($"Temos a Pizza {pizzaName.Sabor}, deseja comprar?");
+        return Ok($"Temos a Pizza {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}.");
 
     }
 
@@ -61,7 +61,7 @@ public class PizzariaController : ControllerBase
         {
             return NotFound("Pizza Inválida.");
         }
-        return Ok($"A Pizza de sabor {pizzaNew.Sabor} foi adicionada ao nosso cardápio.");
+        return StatusCode(StatusCodes.Status201Created, $"A Pizza de sabor {pizzaNew.Sabor} foi adicionada ao nosso cardápio.");
 
     }
 
@@ -73,7 +73,7 @@ public class PizzariaController : ControllerBase
             return BadRequest($"A Pizza de ID = {id} é diferente da Pizza que deseja editar no cardápio.");
         }
         var PizzaAtt = await _pizzaria.GetPizzaEdit(id, pizzariaDTO);
-        return Ok("Pizza alterada com sucesso em nosso cardápio.");
+        return StatusCode(StatusCodes.Status200OK, "Pizza alterada com sucesso em nosso cardápio.");
     }
 
     [HttpDelete("{id:int}")]

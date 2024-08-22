@@ -24,8 +24,6 @@ builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
 builder.Services.AddScoped<IPizzariaService, PizzariaService>();
 builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
 
-//builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
- 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
