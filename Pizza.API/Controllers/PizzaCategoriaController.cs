@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
@@ -6,7 +7,7 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]")]  
 [ApiController]
 public class PizzaCategoriaController : ControllerBase
 {
@@ -19,6 +20,7 @@ public class PizzaCategoriaController : ControllerBase
         _pizzaCategoria = pizzaCategoria;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PizzaCategoriaDTO>>> GetPizzaCategoriesAll()
     {

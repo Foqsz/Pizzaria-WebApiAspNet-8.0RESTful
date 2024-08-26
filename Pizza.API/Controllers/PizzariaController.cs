@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
@@ -7,6 +8,7 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PizzariaController : ControllerBase
