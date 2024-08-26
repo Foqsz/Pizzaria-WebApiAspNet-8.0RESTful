@@ -32,5 +32,57 @@ public class PizzaCategoriaController : ControllerBase
         return StatusCode(StatusCodes.Status200OK, pizzaAll);
     }
 
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaId(int id)
+    {
+        var pizzaById = await _pizzaCategoria.GetCategoriaById(id);
 
+        if (pizzaById is null)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, $"Olá. Não consta no estoque a categoria de pizza com o id {id}.");
+        }
+
+        return StatusCode(StatusCodes.Status200OK, pizzaById);
+    }
+
+    [HttpPost("NovaCategoria")]
+    public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaCreate(PizzaCategoriaDTO pizzaCategoriaDto)
+    {
+        var pizzaCategoriaCreate = await _pizzaCategoria.GetCategoriaCreate(pizzaCategoriaDto);
+
+        if (pizzaCategoriaCreate is null)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, "Não foi possível adicionar a categoria de pizza");
+        }
+
+        return StatusCode(StatusCodes.Status201Created, pizzaCategoriaCreate);
+    }
+
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaUpdate(int id, [FromBody] PizzaCategoriaDTO pizzaDtoUpdate)
+    {
+        var PizzaCategoriaUpdate = await _pizzaCategoria.GetCategoriaUpdate(id, pizzaDtoUpdate);
+
+        if (PizzaCategoriaUpdate is null)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, "Não foi possível localizar essa categoria");
+        }
+
+        return StatusCode(StatusCodes.Status200OK, $"Pizza de categoria {id} atualizada com sucesso.");
+    }
+
+    [HttpDelete("DeletarCategoria/{id}")]
+    public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaDelete(int id)
+    {
+        var PizzaCategoriaDelete = await _pizzaCategoria.GetCategoriaRemove(id);
+
+        if (PizzaCategoriaDelete is null)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, $"Não foi possível localizar a categoria id {id}");
+        }
+
+        return StatusCode(StatusCodes.Status200OK, $"Categoria {id} deleteda com sucesso.");
+    }
 }
+

@@ -52,7 +52,7 @@ public class PizzariaController : ControllerBase
         return StatusCode(StatusCodes.Status200OK, $"Temos a Pizza {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}");
     }
 
-    [HttpPost]
+    [HttpPost("NovaPizza")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaDTO pizzariaDTO)
     {
         var pizzaNew = await _pizzaria.GetPizzaNew(pizzariaDTO);

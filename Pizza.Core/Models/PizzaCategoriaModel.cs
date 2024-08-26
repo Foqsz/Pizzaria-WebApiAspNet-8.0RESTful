@@ -7,8 +7,7 @@ public class PizzaCategoriaModel
 {
     [Key]
     public int PizzaId { get; set; }
-    public string? PizzaCategoria { get; set; }
-    public int PizzaEstoque { get; set; }
+    public string? PizzaCategoria { get; set; }  
 
     [JsonIgnore]
     public IEnumerable<PizzariaModel>? Pizzaria { get; set; }

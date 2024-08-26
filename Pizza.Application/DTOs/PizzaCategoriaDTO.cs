@@ -7,8 +7,7 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
 public class PizzaCategoriaDTO
 {
     public int PizzaId { get; set; }
-    public string? PizzaCategoria { get; set; }
-    public int PizzaEstoque { get; set; }
+    public string? PizzaCategoria { get; set; } 
 
     [JsonIgnore]
     public IEnumerable<PizzariaModel>? Pizzaria { get; set; }

@@ -20,8 +20,8 @@ public class PizzaCategoriaService : IPizzaCategoriaService
 
     public async Task<PizzaCategoriaDTO> GetCategoriaById(int id)
     {
-        await _pizzaCategoriaRepository.GetCategoriaById(id);
-        return _mapper.Map<PizzaCategoriaDTO>(id);
+        var pizzaCategoriaCheck = await _pizzaCategoriaRepository.GetCategoriaById(id);
+        return _mapper.Map<PizzaCategoriaDTO>(pizzaCategoriaCheck);
     }
 
     public async Task<IEnumerable<PizzaCategoriaDTO>> GetCategoriaAll()
