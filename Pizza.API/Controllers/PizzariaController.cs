@@ -54,7 +54,7 @@ public class PizzariaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaModel pizzariaDTO)
+    public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaDTO pizzariaDTO)
     {
         var pizzaNew = await _pizzaria.GetPizzaNew(pizzariaDTO);
         if (pizzaNew is null)

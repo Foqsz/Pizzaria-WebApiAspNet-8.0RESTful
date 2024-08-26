@@ -35,9 +35,10 @@ public class PizzariaService : IPizzariaService
         return _mapper.Map<PizzariaDTO>(pizzaName);
     }
 
-    public async Task<PizzariaDTO> GetPizzaNew(PizzariaModel pizzaDTO)
+    public async Task<PizzariaDTO> GetPizzaNew(PizzariaDTO pizzaDTO)
     {
-        var pizzaCreate = await _pizzariaRepository.GetPizzaCreate(pizzaDTO);
+        var pizzaParaDto = _mapper.Map<PizzariaModel>(pizzaDTO);
+        var pizzaCreate = await _pizzariaRepository.GetPizzaCreate(pizzaParaDto);
         return _mapper.Map<PizzariaDTO>(pizzaCreate);
     }
 

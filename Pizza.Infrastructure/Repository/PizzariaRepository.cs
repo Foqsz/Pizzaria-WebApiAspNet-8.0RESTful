@@ -37,7 +37,7 @@ public class PizzariaRepository : IPizzariaRepository
         return pizzariaDTO;
     }
     public async Task<PizzariaModel> GetPizzaUpdate(PizzariaModel pizzariaDTO)
-    {  
+    {
         var pizzaUpdate = _context.Pizza.Update(pizzariaDTO);
         await _context.SaveChangesAsync();
         return pizzaUpdate.Entity;

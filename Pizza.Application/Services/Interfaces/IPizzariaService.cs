@@ -8,7 +8,7 @@ public interface IPizzariaService
     Task<IEnumerable<PizzariaDTO>> GetPizzaAll();
     Task<PizzariaDTO> GetPizzaNameByName(string name);
     Task<PizzariaDTO> GetPizzaById(int id);
-    Task<PizzariaDTO> GetPizzaNew(PizzariaModel pizzaDTO);
+    Task<PizzariaDTO> GetPizzaNew(PizzariaDTO pizzaDTO);
     Task<PizzariaDTO> GetPizzaEdit(int id, PizzariaDTO pizzaDTO);
     Task<PizzariaDTO> GetRemovePizza(int id);
 }

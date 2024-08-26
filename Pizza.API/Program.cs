@@ -4,6 +4,7 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Data;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,9 @@ builder.Services.AddAutoMapper(typeof(PizzaMappingProfile));
 
 builder.Services.AddScoped<IPizzariaService, PizzariaService>();
 builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
+builder.Services.AddScoped<IPizzaCategoriaService, PizzaCategoriaService>();
+builder.Services.AddScoped<IPizzaCategoriaRepository, PizzaCategoriaRepository>();
+
 
 var app = builder.Build();
 
