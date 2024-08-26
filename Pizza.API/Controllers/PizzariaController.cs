@@ -25,9 +25,9 @@ public class PizzariaController : ControllerBase
 
         if (Pizza is null)
         {
-            return BadRequest();
+            return StatusCode(StatusCodes.Status404NotFound, "Não foi localizado nenhuma pizza no cardápio.");
         }
-        return Ok(Pizza); 
+        return StatusCode(StatusCodes.Status200OK, Pizza); 
     }
 
     [HttpGet("{id:int}")]
@@ -36,9 +36,9 @@ public class PizzariaController : ControllerBase
         var PizzaId = await _pizzaria.GetPizzaById(id);
         if (PizzaId is null)
         {
-            return NotFound("Não foi possível localizar essa pizza em nosso cardápio.");
+            return StatusCode(StatusCodes.Status404NotFound, "Não foi possível localizar essa pizza em nosso cardápio.");
         }
-        return Ok($"Pizza encontrada em nosso cardápio. Confira: {PizzaId.Sabor}, {PizzaId.Descricao}");
+        return StatusCode(StatusCodes.Status200OK, $"Pizza encontrada em nosso cardápio. Confira: {PizzaId.Sabor}, {PizzaId.Descricao}");
     }
 
     [HttpGet("Cardápio/{string}")]
@@ -47,10 +47,9 @@ public class PizzariaController : ControllerBase
         var pizzaName = await _pizzaria.GetPizzaNameByName(sabor);
         if (pizzaName is null)
         {
-            return NotFound($"A Pizza de {sabor} não foi encontrada em nosso cardápio.");
+            return StatusCode(StatusCodes.Status404NotFound, $"A Pizza de {sabor} não foi encontrada em nosso cardápio.");
         }
-        return Ok($"Temos a Pizza {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}.");
-
+        return StatusCode(StatusCodes.Status200OK, $"Temos a Pizza {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}");
     }
 
     [HttpPost]
@@ -59,7 +58,7 @@ public class PizzariaController : ControllerBase
         var pizzaNew = await _pizzaria.GetPizzaNew(pizzariaDTO);
         if (pizzaNew is null)
         {
-            return NotFound("Pizza Inválida.");
+            return StatusCode(StatusCodes.Status404NotFound, "Pizza Inválida.");
         }
         return StatusCode(StatusCodes.Status201Created, $"A Pizza de sabor {pizzaNew.Sabor} foi adicionada ao nosso cardápio.");
 
@@ -70,7 +69,7 @@ public class PizzariaController : ControllerBase
     {
         if (id != pizzariaDTO.Id)
         {
-            return BadRequest($"A Pizza de ID = {id} é diferente da Pizza que deseja editar no cardápio.");
+            return StatusCode(StatusCodes.Status400BadRequest, $"A Pizza de ID = {id} é diferente da Pizza que deseja editar no cardápio.");
         }
         var PizzaAtt = await _pizzaria.GetPizzaEdit(id, pizzariaDTO);
         return StatusCode(StatusCodes.Status200OK, "Pizza alterada com sucesso em nosso cardápio.");
@@ -82,8 +81,8 @@ public class PizzariaController : ControllerBase
         var pizzaRemove = await _pizzaria.GetRemovePizza(id);
         if (pizzaRemove is null)
         {
-            return NotFound("Pizza não encontrada");
+            return StatusCode(StatusCodes.Status404NotFound, "Pizza não encontrada");
         }
-        return Ok($"A Pizza {pizzaRemove.Sabor} foi removida com súcesso do cardápio.");
+        return StatusCode(StatusCodes.Status200OK, $"A Pizza {pizzaRemove.Sabor} foi removida com súcesso do cardápio.");
     }
 }
