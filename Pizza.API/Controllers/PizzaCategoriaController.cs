@@ -59,7 +59,7 @@ public class PizzaCategoriaController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
+    [HttpPut("AlterarCodigo/{id}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaUpdate(int id, [FromBody] PizzaCategoriaDTO pizzaDtoUpdate)
     {
         var PizzaCategoriaUpdate = await _pizzaCategoria.GetCategoriaUpdate(id, pizzaDtoUpdate);

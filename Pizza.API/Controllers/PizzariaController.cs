@@ -41,7 +41,7 @@ public class PizzariaController : ControllerBase
         return StatusCode(StatusCodes.Status200OK, $"Pizza encontrada em nosso cardápio. Confira: {PizzaId.Sabor}, {PizzaId.Descricao}");
     }
 
-    [HttpGet("Cardápio/{string}")]
+    [HttpGet("Cardapio/{string}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaName(string sabor)
     {
         var pizzaName = await _pizzaria.GetPizzaNameByName(sabor);
@@ -64,7 +64,7 @@ public class PizzariaController : ControllerBase
 
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("AtualizarPizza/{id:int}")]
     public async Task<ActionResult> GetPizzaUpdate(int id, [FromBody]PizzariaDTO pizzariaDTO)
     {
         if (id != pizzariaDTO.Id)
@@ -75,7 +75,7 @@ public class PizzariaController : ControllerBase
         return StatusCode(StatusCodes.Status200OK, "Pizza alterada com sucesso em nosso cardápio.");
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("DeletarPizza/{id:int}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaRemove(int id)
     {
         var pizzaRemove = await _pizzaria.GetRemovePizza(id);
