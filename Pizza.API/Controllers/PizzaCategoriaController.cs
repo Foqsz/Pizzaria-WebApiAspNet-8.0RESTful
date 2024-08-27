@@ -7,6 +7,7 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]  
 [ApiController]
 public class PizzaCategoriaController : ControllerBase
@@ -20,7 +21,6 @@ public class PizzaCategoriaController : ControllerBase
         _pizzaCategoria = pizzaCategoria;
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PizzaCategoriaDTO>>> GetPizzaCategoriesAll()
     {

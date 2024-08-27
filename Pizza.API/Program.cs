@@ -11,6 +11,7 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Data;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository.Interfaces;
+using StackExchange.Redis;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,6 +53,8 @@ builder.Services.AddSwaggerGen(c =>
 
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
+var redisConnection = ConnectionMultiplexer.Connect("127.0.0.1:6379");  
+
 builder.Services.AddDbContext<PizzariaContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 builder.Services.AddIdentity<ApplicationUserModel, IdentityRole>().AddEntityFrameworkStores<PizzariaContext>().AddDefaultTokenProviders();
 
@@ -78,6 +81,11 @@ builder.Services.AddScoped<IPizzariaRepository, PizzariaRepository>();
 builder.Services.AddScoped<IPizzaCategoriaService, PizzaCategoriaService>();
 builder.Services.AddScoped<IPizzaCategoriaRepository, PizzaCategoriaRepository>();
 
+builder.Services.AddSingleton<IConnectionMultiplexer>(redisConnection);
+
+builder.Services.AddSingleton<RedisCacheService>();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -87,6 +95,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pizzaria API V1"));
 }
+
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
