@@ -62,15 +62,30 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
 
             if (result.Succeeded)
             {
-                return await BuildAndStoreToken(userInfo);
+                // Verificar se o token já está armazenado no Redis
+                var existingToken = await _redisDatabase.StringGetAsync(userInfo.Email);
+
+                if (existingToken.HasValue)
+                {
+                    // Retornar o token existente
+                    return new UserTokenModel()
+                    {
+                        Token = existingToken,
+                        Expiration = DateTime.UtcNow.AddMinutes(2) // Defina a expiração do token conforme necessário
+                    };
+                }
+                else
+                {
+                    // Gerar um novo token e armazená-lo no Redis
+                    return await BuildAndStoreToken(userInfo);
+                }
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "login inválido.");
+                ModelState.AddModelError(string.Empty, "Login inválido.");
                 return BadRequest(ModelState);
             }
         }
-
         private async Task<UserTokenModel> BuildAndStoreToken(UserInfoModel userInfo)
         {
             var claims = new[]
@@ -82,10 +97,8 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            // tempo de expiração do token: 1 hora
-            var expiration = DateTime.UtcNow.AddMinutes(5);
-
-            JwtSecurityToken token = new JwtSecurityToken(
+            var expiration = DateTime.UtcNow.AddMinutes(2);
+            var token = new JwtSecurityToken(
                 issuer: null,
                 audience: null,
                 claims: claims,
@@ -103,5 +116,6 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
                 Expiration = expiration
             };
         }
+
     }
 }
