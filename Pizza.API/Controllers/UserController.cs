@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc; 
 using Microsoft.IdentityModel.Tokens;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
-using StackExchange.Redis;
-using System;
+using StackExchange.Redis; 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text; 
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
 {
@@ -33,12 +29,18 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
             _redisDatabase = redisConnection.GetDatabase();
         }
 
+        //_userManager: Gerencia a criação e manipulação de usuários.
+        //_signInManager: Gerencia o processo de autenticação.
+        //_configuration: Fornece a chave secreta para gerar tokens JWT.
+        //_redisDatabase: Acesso ao banco de dados Redis
+
         [HttpGet]
         public ActionResult<string> Get()
         {
             return " << Controlador UsuariosController :: WebApiUsuarios >> ";
         }
 
+        #region Criar conta e fornecer token com redis
         [HttpPost("Criar")]
         public async Task<ActionResult<UserTokenModel>> CreateUser([FromBody] UserInfoModel model)
         {
@@ -53,7 +55,9 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
                 return BadRequest("Usuário ou senha inválidos");
             }
         }
+        #endregion
 
+        #region Efetuar login com token e redis
         [HttpPost("Login")]
         public async Task<ActionResult<UserTokenModel>> Login([FromBody] UserInfoModel userInfo)
         {
@@ -77,7 +81,7 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
                 else
                 {
                     // Gerar um novo token e armazená-lo no Redis
-                    return await BuildAndStoreToken(userInfo);
+                    return await BuildAndStoreToken(userInfo); //Armazena através do BuildAndStoreToken
                 }
             }
             else
@@ -86,6 +90,9 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
                 return BadRequest(ModelState);
             }
         }
+        #endregion
+
+        #region Fornecer token após login ou criação de conta
         private async Task<UserTokenModel> BuildAndStoreToken(UserInfoModel userInfo)
         {
             var claims = new[]
@@ -116,6 +123,7 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers
                 Expiration = expiration
             };
         }
+        #endregion
 
     }
 }

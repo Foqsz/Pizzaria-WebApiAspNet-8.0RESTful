@@ -20,6 +20,7 @@ public class PizzariaController : ControllerBase
         _pizzaria = pizzaria;
     }
 
+    #region Fornecer todas as pizzas do cardápio
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PizzariaDTO>>> GetPizzaAll()
     {
@@ -31,7 +32,9 @@ public class PizzariaController : ControllerBase
         }
         return StatusCode(StatusCodes.Status200OK, Pizza); 
     }
+    #endregion
 
+    #region Fornecer uma pizza pelo seu ID
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaById(int id)
     {
@@ -42,7 +45,9 @@ public class PizzariaController : ControllerBase
         }
         return StatusCode(StatusCodes.Status200OK, $"Pizza encontrada em nosso cardápio. Confira: {PizzaId.Sabor}, {PizzaId.Descricao}");
     }
+    #endregion
 
+    #region Fornece uma pizza pelo seu nome
     [HttpGet("Cardapio/{string}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaName(string sabor)
     {
@@ -53,7 +58,9 @@ public class PizzariaController : ControllerBase
         }
         return StatusCode(StatusCodes.Status200OK, $"Temos a Pizza {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}");
     }
+    #endregion
 
+    #region Adicionar nova pizza no cardápio
     [HttpPost("NovaPizza")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaDTO pizzariaDTO)
     {
@@ -65,7 +72,9 @@ public class PizzariaController : ControllerBase
         return StatusCode(StatusCodes.Status201Created, $"A Pizza de sabor {pizzaNew.Sabor} foi adicionada ao nosso cardápio.");
 
     }
+    #endregion
 
+    #region Atualizar uma pizza do cardápio
     [HttpPut("AtualizarPizza/{id:int}")]
     public async Task<ActionResult> GetPizzaUpdate(int id, [FromBody]PizzariaDTO pizzariaDTO)
     {
@@ -76,7 +85,9 @@ public class PizzariaController : ControllerBase
         var PizzaAtt = await _pizzaria.GetPizzaEdit(id, pizzariaDTO);
         return StatusCode(StatusCodes.Status200OK, "Pizza alterada com sucesso em nosso cardápio.");
     }
+    #endregion
 
+    #region Deletar uma pizza do cardápio
     [HttpDelete("DeletarPizza/{id:int}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaRemove(int id)
     {
@@ -87,4 +98,5 @@ public class PizzariaController : ControllerBase
         }
         return StatusCode(StatusCodes.Status200OK, $"A Pizza {pizzaRemove.Sabor} foi removida com súcesso do cardápio.");
     }
+    #endregion
 }

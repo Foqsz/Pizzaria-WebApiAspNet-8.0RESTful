@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
-using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces; 
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 
@@ -21,6 +21,7 @@ public class PizzaCategoriaController : ControllerBase
         _pizzaCategoria = pizzaCategoria;
     }
 
+    #region Listar todas as categorias
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PizzaCategoriaDTO>>> GetPizzaCategoriesAll()
     {
@@ -33,7 +34,9 @@ public class PizzaCategoriaController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, pizzaAll);
     }
+    #endregion
 
+    #region Listar categoria por id
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaId(int id)
     {
@@ -46,7 +49,9 @@ public class PizzaCategoriaController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, pizzaById);
     }
+    #endregion
 
+    #region Criar uma nova categoria
     [HttpPost("NovaCategoria")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaCreate(PizzaCategoriaDTO pizzaCategoriaDto)
     {
@@ -59,9 +64,10 @@ public class PizzaCategoriaController : ControllerBase
 
         return StatusCode(StatusCodes.Status201Created, pizzaCategoriaCreate);
     }
+    #endregion
 
-
-    [HttpPut("AlterarCodigo/{id}")]
+    #region Atualizar uma categoria
+    [HttpPut("AtualizarCategoria/{id}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaUpdate(int id, [FromBody] PizzaCategoriaDTO pizzaDtoUpdate)
     {
         var PizzaCategoriaUpdate = await _pizzaCategoria.GetCategoriaUpdate(id, pizzaDtoUpdate);
@@ -73,7 +79,9 @@ public class PizzaCategoriaController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, $"Pizza de categoria {id} atualizada com sucesso.");
     }
+    #endregion
 
+    #region Deletar uma categoria
     [HttpDelete("DeletarCategoria/{id}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaDelete(int id)
     {
@@ -86,5 +94,6 @@ public class PizzaCategoriaController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, $"Categoria {id} deleteda com sucesso.");
     }
+    #endregion
 }
 
