@@ -21,6 +21,7 @@ public class PizzariaController : ControllerBase
     }
 
     #region Fornecer todas as pizzas do cardápio
+    [Authorize(Roles = "User, Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PizzariaDTO>>> GetPizzaAll()
     {
@@ -35,6 +36,7 @@ public class PizzariaController : ControllerBase
     #endregion
 
     #region Fornecer uma pizza pelo seu ID
+    [Authorize(Roles = "User, Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaById(int id)
     {
@@ -48,6 +50,7 @@ public class PizzariaController : ControllerBase
     #endregion
 
     #region Fornece uma pizza pelo seu nome
+    [Authorize(Roles = "User, Admin")]
     [HttpGet("Cardapio/{string}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaName(string sabor)
     {
@@ -61,6 +64,7 @@ public class PizzariaController : ControllerBase
     #endregion
 
     #region Adicionar nova pizza no cardápio
+    [Authorize(Roles = "Admin")]
     [HttpPost("NovaPizza")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaDTO pizzariaDTO)
     {
@@ -75,6 +79,7 @@ public class PizzariaController : ControllerBase
     #endregion
 
     #region Atualizar uma pizza do cardápio
+    [Authorize(Roles = "Admin")]
     [HttpPut("AtualizarPizza/{id:int}")]
     public async Task<ActionResult> GetPizzaUpdate(int id, [FromBody]PizzariaDTO pizzariaDTO)
     {
@@ -88,6 +93,7 @@ public class PizzariaController : ControllerBase
     #endregion
 
     #region Deletar uma pizza do cardápio
+    [Authorize(Roles = "Admin")]
     [HttpDelete("DeletarPizza/{id:int}")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaRemove(int id)
     {

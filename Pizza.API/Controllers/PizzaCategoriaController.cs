@@ -22,6 +22,7 @@ public class PizzaCategoriaController : ControllerBase
     }
 
     #region Listar todas as categorias
+    [Authorize(Roles = "User, Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PizzaCategoriaDTO>>> GetPizzaCategoriesAll()
     {
@@ -37,6 +38,7 @@ public class PizzaCategoriaController : ControllerBase
     #endregion
 
     #region Listar categoria por id
+    [Authorize(Roles = "User, Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaId(int id)
     {
@@ -52,6 +54,7 @@ public class PizzaCategoriaController : ControllerBase
     #endregion
 
     #region Criar uma nova categoria
+    [Authorize(Roles = "Admin")]
     [HttpPost("NovaCategoria")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaCreate(PizzaCategoriaDTO pizzaCategoriaDto)
     {
@@ -67,6 +70,7 @@ public class PizzaCategoriaController : ControllerBase
     #endregion
 
     #region Atualizar uma categoria
+    [Authorize(Roles = "Admin")]
     [HttpPut("AtualizarCategoria/{id}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaUpdate(int id, [FromBody] PizzaCategoriaDTO pizzaDtoUpdate)
     {
@@ -82,6 +86,7 @@ public class PizzaCategoriaController : ControllerBase
     #endregion
 
     #region Deletar uma categoria
+    [Authorize(Roles = "Admin")]
     [HttpDelete("DeletarCategoria/{id}")]
     public async Task<ActionResult<PizzaCategoriaDTO>> GetPizzaCategoriaDelete(int id)
     {
