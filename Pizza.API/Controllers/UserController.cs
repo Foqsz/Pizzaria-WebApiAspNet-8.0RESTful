@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc; 
 using Microsoft.IdentityModel.Tokens;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
@@ -93,7 +94,8 @@ public class UserController : ControllerBase
     #endregion
 
     #region Promover cargo Admin
-    [HttpPost("AdicionarCargoAdmin")]
+    [Authorize(Roles = "Admin")]
+    [HttpPost("AdicionarCargoAdmin")] 
     public async Task<IActionResult> AssignAdminRole(string email)
     {
         var roleManagerService = new RoleManagerService(_userManager);
@@ -111,6 +113,7 @@ public class UserController : ControllerBase
     #endregion
 
     #region Promover cargo User
+    [Authorize(Roles = "Admin")]
     [HttpPost("AdicionarCargoUser")]
     public async Task<IActionResult> AssignUserRole(string email)
     {
