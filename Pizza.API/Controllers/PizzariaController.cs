@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
-using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 
@@ -22,7 +19,7 @@ public class PizzariaController : ControllerBase
 
     #region Fornecer todas as pizzas do cardápio
     [Authorize(Roles = "User, Admin")]
-    [HttpGet]
+    [HttpGet("Cardapio")]
     public async Task<ActionResult<IEnumerable<PizzariaDTO>>> GetPizzaAll()
     {
         var Pizza = await _pizzaria.GetPizzaAll();

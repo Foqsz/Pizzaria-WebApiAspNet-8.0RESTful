@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces; 

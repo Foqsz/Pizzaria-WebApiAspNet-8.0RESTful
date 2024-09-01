@@ -35,11 +35,13 @@ public class UserController : ControllerBase
     //_configuration: Fornece a chave secreta para gerar tokens JWT.
     //_redisDatabase: Acesso ao banco de dados Redis
 
+    #region Apresentação básica
     [HttpGet]
     public ActionResult<string> Get()
     {
         return " << Controlador UsuariosController :: WebApiUsuarios >> ";
     }
+    #endregion
 
     #region Criar conta e fornecer token com redis
     [HttpPost("Criar")]
