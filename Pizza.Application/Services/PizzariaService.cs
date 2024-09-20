@@ -5,6 +5,8 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository.Interfaces;
 
+//O service contém a lógica, interagindo com o repositório para acessar os dados//
+
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
 
 public class PizzariaService : IPizzariaService
@@ -59,6 +61,14 @@ public class PizzariaService : IPizzariaService
 
         //3 Mapeando para Dto
         return _mapper.Map<PizzariaDTO>(updatedPizza);
+    }
+
+    public async Task<PizzariaDTO> GetPizzaPatch(PizzariaDTO pizzaDTO)
+    {
+        var pizza = _mapper.Map<PizzariaModel>(pizzaDTO);
+        var pizzaPatch = await _pizzariaRepository.GetPizzaPatch(pizza);
+
+        return _mapper.Map<PizzariaDTO>(pizzaPatch);
     }
 
     public async Task<PizzariaDTO> GetRemovePizza(int id)

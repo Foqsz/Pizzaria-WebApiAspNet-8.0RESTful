@@ -10,5 +10,6 @@ public interface IPizzariaService
     Task<PizzariaDTO> GetPizzaById(int id);
     Task<PizzariaDTO> GetPizzaNew(PizzariaDTO pizzaDTO);
     Task<PizzariaDTO> GetPizzaEdit(int id, PizzariaDTO pizzaDTO);
+    Task<PizzariaDTO> GetPizzaPatch(PizzariaDTO pizzaDTO);
     Task<PizzariaDTO> GetRemovePizza(int id);
 }

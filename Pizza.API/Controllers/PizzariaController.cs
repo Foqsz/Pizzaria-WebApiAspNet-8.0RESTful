@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.DTOs;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services;
 using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Application.Services.Interfaces;
+using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Core.Models;
+
+//O controlador recebe as requisições do Swagger e chama o service para aplicar as chamadas//
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 
@@ -11,10 +17,12 @@ namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.API.Controllers;
 public class PizzariaController : ControllerBase
 {
     private readonly IPizzariaService _pizzaria;
+    private readonly IMapper _mapper;
 
-    public PizzariaController(IPizzariaService pizzaria)
+    public PizzariaController(IPizzariaService pizzaria, IMapper mapper)
     {
         _pizzaria = pizzaria;
+        _mapper = mapper;
     }
 
     #region Fornecer todas as pizzas do cardápio
@@ -28,7 +36,7 @@ public class PizzariaController : ControllerBase
         {
             return StatusCode(StatusCodes.Status404NotFound, "Não foi localizado nenhuma pizza no cardápio.");
         }
-        return StatusCode(StatusCodes.Status200OK, Pizza); 
+        return StatusCode(StatusCodes.Status200OK, Pizza);
     }
     #endregion
 
@@ -63,7 +71,7 @@ public class PizzariaController : ControllerBase
     #region Adicionar nova pizza no cardápio
     [Authorize(Roles = "Admin")]
     [HttpPost("NovaPizza")]
-    public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody]PizzariaDTO pizzariaDTO)
+    public async Task<ActionResult<PizzariaDTO>> GetPizzaCreate([FromBody] PizzariaDTO pizzariaDTO)
     {
         var pizzaNew = await _pizzaria.GetPizzaNew(pizzariaDTO);
         if (pizzaNew is null)
@@ -78,7 +86,7 @@ public class PizzariaController : ControllerBase
     #region Atualizar uma pizza do cardápio
     [Authorize(Roles = "Admin")]
     [HttpPut("AtualizarPizza/{id:int}")]
-    public async Task<ActionResult> GetPizzaUpdate(int id, [FromBody]PizzariaDTO pizzariaDTO)
+    public async Task<ActionResult> GetPizzaUpdate(int id, [FromBody] PizzariaDTO pizzariaDTO)
     {
         if (id != pizzariaDTO.Id)
         {
@@ -86,6 +94,43 @@ public class PizzariaController : ControllerBase
         }
         var PizzaAtt = await _pizzaria.GetPizzaEdit(id, pizzariaDTO);
         return StatusCode(StatusCodes.Status200OK, "Pizza alterada com sucesso em nosso cardápio.");
+    }
+    #endregion
+
+    #region Atualizar a pizza parcialmente no cardápio
+    [Authorize(Roles = "Admin")]
+    [HttpPatch("AtualizacaoParcial/{id:int}")]
+    public async Task<ActionResult<PizzaDTOUpdateResponse>> GetPizzaPatch(int id, JsonPatchDocument<PizzaDTOUpdateRequest> pizzaPatchDTO)
+    {
+        if (pizzaPatchDTO is null || id <= 0)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, "Pizza é nula ou ID não localizado.");
+        }
+
+        // Buscar a pizza existente no service
+        var pizzaExistente = await _pizzaria.GetPizzaById(id);
+
+        if (pizzaExistente is null)
+        {
+            return NotFound("Pizza não encontrada.");
+        }
+
+        var pizzaDTOUpdate = _mapper.Map<PizzaDTOUpdateRequest>(pizzaExistente);
+
+        // Aplicar o patch ao DTO existente
+        pizzaPatchDTO.ApplyTo(pizzaDTOUpdate, (Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter)ModelState);
+
+        if (!ModelState.IsValid)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, "Pizza inválida");
+        }
+
+        _mapper.Map(pizzaDTOUpdate, pizzaExistente);
+
+        // Atualizar a pizza parcialmente via o service
+        var pizzaAtualizada = await _pizzaria.GetPizzaPatch(pizzaExistente);
+
+        return StatusCode(StatusCodes.Status200OK, $"A Pizza foi atualizada parcialmente");
     }
     #endregion
 

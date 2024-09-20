@@ -5,6 +5,7 @@ using Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infrastructure.Repository.Interfac
 
 namespace Pizzaria_WebApiAspNet_8._0RESTful.Pizza.Infraestucture.Repository;
 
+//O repositório é responsável por interagir diretamente com o banco de dados//
 public class PizzariaRepository : IPizzariaRepository
 {
     private readonly PizzariaContext _context;
@@ -43,6 +44,31 @@ public class PizzariaRepository : IPizzariaRepository
         return pizzaUpdate.Entity;
     }
 
+    public async Task<PizzariaModel> GetPizzaPatch(PizzariaModel pizzariaDTO)
+    {
+        var pizzaExist = _context.Pizza.FirstOrDefault(p => p.Id == pizzariaDTO.Id);
+
+        if (!string.IsNullOrEmpty(pizzariaDTO.Sabor))
+        {
+            pizzaExist.Sabor = pizzariaDTO.Sabor;
+        }
+
+        if (!string.IsNullOrEmpty(pizzariaDTO.Descricao))
+        {
+            pizzaExist.Descricao = pizzariaDTO.Descricao;
+        }
+
+        if (pizzariaDTO.Price > 0)
+        {
+            pizzaExist.Price = pizzariaDTO.Price;
+        }
+
+        _context.Pizza.Update(pizzaExist);
+        await _context.SaveChangesAsync();
+
+        return pizzaExist;
+    }
+
     public async Task<PizzariaModel> GetPizzaRemove(int id)
     {
         try
@@ -60,4 +86,5 @@ public class PizzariaRepository : IPizzariaRepository
 
         }
     }
+
 }

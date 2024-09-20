@@ -23,7 +23,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiPizzaria", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Version = "v1",
+        Title = "API Pizarria",
+        Description = "API Para gerenciamento de uma Pizzaria",
+        TermsOfService = new Uri("https://foqsz.github.io/"),
+        Contact = new OpenApiContact
+        {
+            Name = "Victor Vinicius",
+            Email = "contatovictorvinicius05@gmail.com",
+            Url = new Uri("https://foqsz.github.io/"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Usar sobre LICX",
+            Url = new Uri("https://foqsz.github.io/"),
+        }
+    });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

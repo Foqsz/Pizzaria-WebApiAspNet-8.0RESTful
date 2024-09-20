@@ -10,6 +10,7 @@ public interface IPizzariaRepository
     Task<IEnumerable<PizzariaModel>> GetByAll();
     Task<PizzariaModel> GetPizzaUpdate(PizzariaModel pizzariaDTO);
     Task<PizzariaModel> GetPizzaCreate(PizzariaModel pizzariaDTO);
+    Task<PizzariaModel> GetPizzaPatch(PizzariaModel pizzariaDTO);
     Task<PizzariaModel> GetPizzaRemove(int id);
 
 }
