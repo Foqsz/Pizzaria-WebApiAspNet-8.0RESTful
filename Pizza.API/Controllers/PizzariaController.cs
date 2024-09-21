@@ -118,11 +118,15 @@ public class PizzariaController : ControllerBase
         var pizzaDTOUpdate = _mapper.Map<PizzaDTOUpdateRequest>(pizzaExistente);
 
         // Aplicar o patch ao DTO existente
-        pizzaPatchDTO.ApplyTo(pizzaDTOUpdate, (Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter)ModelState);
+        pizzaPatchDTO.ApplyTo(pizzaDTOUpdate, ModelState);
 
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid || !TryValidateModel(pizzaDTOUpdate))
         {
-            return StatusCode(StatusCodes.Status400BadRequest, "Pizza inválida");
+            var errorMessages = ModelState.Values.SelectMany(v => v.Errors)
+                                                 .Select(e => e.ErrorMessage)
+                                                 .ToList();
+
+            return StatusCode(StatusCodes.Status400BadRequest, $"Pizza inválida: {string.Join(", ", errorMessages)}");
         }
 
         _mapper.Map(pizzaDTOUpdate, pizzaExistente);
@@ -132,6 +136,7 @@ public class PizzariaController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, $"A Pizza foi atualizada parcialmente");
     }
+
     #endregion
 
     #region Deletar uma pizza do cardápio

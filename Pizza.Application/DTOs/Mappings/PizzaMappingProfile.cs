@@ -9,5 +9,7 @@ public class PizzaMappingProfile : Profile
     {
         CreateMap<PizzariaModel, PizzariaDTO>().ReverseMap();
         CreateMap<PizzaCategoriaModel, PizzaCategoriaDTO>().ReverseMap();
+        CreateMap<PizzariaDTO, PizzaDTOUpdateRequest>().ReverseMap();
+        CreateMap<PizzariaDTO, PizzaDTOUpdateResponse>().ReverseMap();
     }
 }
