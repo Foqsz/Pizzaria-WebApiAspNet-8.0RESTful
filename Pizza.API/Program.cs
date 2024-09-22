@@ -33,7 +33,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "API Pizarria",
-        Description = "API Para gerenciamento de uma Pizzaria",
+        Description = "API Para gerenciamento de Pizzaria",
         TermsOfService = new Uri("https://foqsz.github.io/"),
         Contact = new OpenApiContact
         {
