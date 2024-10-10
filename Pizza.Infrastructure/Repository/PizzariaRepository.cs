@@ -27,7 +27,7 @@ public class PizzariaRepository : IPizzariaRepository
 
     public async Task<PizzariaModel> GetByName(string sabor)
     {
-        return await _context.Pizza.FirstOrDefaultAsync(p => p.Sabor == sabor);
+        return await _context.Pizza.FirstOrDefaultAsync(p => p.Sabor.ToLower().Contains(sabor.ToLower()));
     }
 
     public async Task<PizzariaModel> GetPizzaCreate(PizzariaModel pizzariaDTO)

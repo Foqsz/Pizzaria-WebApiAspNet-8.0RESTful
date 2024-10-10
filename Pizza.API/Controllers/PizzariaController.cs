@@ -56,15 +56,15 @@ public class PizzariaController : ControllerBase
 
     #region Fornece uma pizza pelo seu nome
     [Authorize(Roles = "User, Admin")]
-    [HttpGet("Cardapio/{string}")]
+    [HttpGet("Cardapio/PesquisarSabor")]
     public async Task<ActionResult<PizzariaDTO>> GetPizzaName(string sabor)
     {
         var pizzaName = await _pizzaria.GetPizzaNameByName(sabor);
         if (pizzaName is null)
         {
-            return StatusCode(StatusCodes.Status404NotFound, $"A Pizza de {sabor} não foi encontrada em nosso cardápio.");
+            return StatusCode(StatusCodes.Status404NotFound, $"Não foi possível localizar {sabor} em nosso cardápio.");
         }
-        return StatusCode(StatusCodes.Status200OK, $"Temos a Pizza {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}");
+        return StatusCode(StatusCodes.Status200OK, $"Temos no cardápio a: {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}");
     }
     #endregion
 
