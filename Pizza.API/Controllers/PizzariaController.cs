@@ -18,11 +18,13 @@ public class PizzariaController : ControllerBase
 {
     private readonly IPizzariaService _pizzaria;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
-    public PizzariaController(IPizzariaService pizzaria, IMapper mapper)
+    public PizzariaController(IPizzariaService pizzaria, IMapper mapper, ILogger<PizzariaController> logger)
     {
         _pizzaria = pizzaria;
         _mapper = mapper;
+        _logger = logger;
     }
 
     #region Fornecer todas as pizzas do cardápio
@@ -34,8 +36,10 @@ public class PizzariaController : ControllerBase
 
         if (Pizza is null)
         {
+            _logger.LogWarning("Nenhuma pizza encontrada.");
             return StatusCode(StatusCodes.Status404NotFound, "Não foi localizado nenhuma pizza no cardápio.");
         }
+        _logger.LogInformation("Listagem de pizzas feita com sucesso");
         return StatusCode(StatusCodes.Status200OK, Pizza);
     }
     #endregion
@@ -48,8 +52,10 @@ public class PizzariaController : ControllerBase
         var PizzaId = await _pizzaria.GetPizzaById(id);
         if (PizzaId is null)
         {
+            _logger.LogWarning($"Não foi encontrada a pizza de id {id} no cardápio...");
             return StatusCode(StatusCodes.Status404NotFound, "Não foi possível localizar essa pizza em nosso cardápio.");
         }
+        _logger.LogInformation($"Pizza id {id} encontrada com sucesso na busca.");
         return StatusCode(StatusCodes.Status200OK, $"Pizza encontrada em nosso cardápio. Confira: {PizzaId.Sabor}, {PizzaId.Descricao}");
     }
     #endregion
@@ -62,8 +68,10 @@ public class PizzariaController : ControllerBase
         var pizzaName = await _pizzaria.GetPizzaNameByName(sabor);
         if (pizzaName is null)
         {
+            _logger.LogWarning($"A busca pela pizza de sabor {sabor} não foi localizada.");
             return StatusCode(StatusCodes.Status404NotFound, $"Não foi possível localizar {sabor} em nosso cardápio.");
         }
+        _logger.LogInformation($"Pizza de sabor {sabor} localizada com sucesso");
         return StatusCode(StatusCodes.Status200OK, $"Temos no cardápio a: {pizzaName.Sabor}, atualmente com o valor R${pizzaName.Price.ToString("F2")}");
     }
     #endregion
@@ -76,8 +84,10 @@ public class PizzariaController : ControllerBase
         var pizzaNew = await _pizzaria.GetPizzaNew(pizzariaDTO);
         if (pizzaNew is null)
         {
+            _logger.LogWarning("Não foi possível adicionar a nova pizza");
             return StatusCode(StatusCodes.Status404NotFound, "Pizza Inválida.");
         }
+        _logger.LogInformation("Pizza adicionada com sucesso");
         return StatusCode(StatusCodes.Status201Created, $"A Pizza de sabor {pizzaNew.Sabor} foi adicionada ao nosso cardápio.");
 
     }
@@ -90,9 +100,11 @@ public class PizzariaController : ControllerBase
     {
         if (id != pizzariaDTO.Id)
         {
+            _logger.LogWarning("O id informado para atualizar é diferente do Id contido no Banco de dados");
             return StatusCode(StatusCodes.Status400BadRequest, $"A Pizza de ID = {id} é diferente da Pizza que deseja editar no cardápio.");
         }
         var PizzaAtt = await _pizzaria.GetPizzaEdit(id, pizzariaDTO);
+        _logger.LogInformation("Pizza atualizada com sucesso");
         return StatusCode(StatusCodes.Status200OK, "Pizza alterada com sucesso em nosso cardápio.");
     }
     #endregion
@@ -104,6 +116,7 @@ public class PizzariaController : ControllerBase
     {
         if (pizzaPatchDTO is null || id <= 0)
         {
+            _logger.LogWarning("Pizza é nula.");
             return StatusCode(StatusCodes.Status404NotFound, "Pizza é nula ou ID não localizado.");
         }
 
@@ -112,6 +125,7 @@ public class PizzariaController : ControllerBase
 
         if (pizzaExistente is null)
         {
+            _logger.LogWarning("Pizza não localizada para atualização parcial.");
             return NotFound("Pizza não encontrada.");
         }
 
@@ -134,6 +148,7 @@ public class PizzariaController : ControllerBase
         // Atualizar a pizza parcialmente via o service
         var pizzaAtualizada = await _pizzaria.GetPizzaPatch(pizzaExistente);
 
+        _logger.LogInformation("Pizza atualizada parcialmente.");
         return StatusCode(StatusCodes.Status200OK, $"A Pizza foi atualizada parcialmente");
     }
 
@@ -147,8 +162,10 @@ public class PizzariaController : ControllerBase
         var pizzaRemove = await _pizzaria.GetRemovePizza(id);
         if (pizzaRemove is null)
         {
+            _logger.LogWarning("Não foi possível encontrar a pizza para deletar.");
             return StatusCode(StatusCodes.Status404NotFound, "Pizza não encontrada");
         }
+        _logger.LogInformation("Pizza removida com sucesso");
         return StatusCode(StatusCodes.Status200OK, $"A Pizza {pizzaRemove.Sabor} foi removida com súcesso do cardápio.");
     }
     #endregion

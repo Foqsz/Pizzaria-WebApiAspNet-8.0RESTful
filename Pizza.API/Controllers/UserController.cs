@@ -18,16 +18,19 @@ public class UserController : ControllerBase
     private readonly SignInManager<ApplicationUserModel> _signInManager;
     private readonly IConfiguration _configuration;
     private readonly IDatabase _redisDatabase;
+    private readonly ILogger<UserController> _logger;
 
     public UserController(UserManager<ApplicationUserModel> userManager,
         SignInManager<ApplicationUserModel> signInManager,
         IConfiguration configuration,
-        IConnectionMultiplexer redisConnection)
+        IConnectionMultiplexer redisConnection,
+        ILogger<UserController> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
         _redisDatabase = redisConnection.GetDatabase();
+        _logger = logger;
     }
 
     //_userManager: Gerencia a criação e manipulação de usuários.
@@ -39,6 +42,7 @@ public class UserController : ControllerBase
     [HttpGet]
     public ActionResult<string> Get()
     {
+        _logger.LogInformation("Apresentação executada com sucesso!");
         return " << Controlador UsuariosController :: WebApiUsuarios >> ";
     }
     #endregion
@@ -70,13 +74,15 @@ public class UserController : ControllerBase
         if (result.Succeeded)
         {
             // Verificar se o token já está armazenado no Redis
+            _logger.LogInformation("Verificando se o token já está armazenado...");
             var existingToken = await _redisDatabase.StringGetAsync(userInfo.Email);
 
             if (existingToken.HasValue)
             {
                 // Retornar o token existente
+                _logger.LogInformation("Usuário ainda ativo no Redis. Enviando o token novamente...");
                 return new UserTokenModel()
-                {
+                { 
                     Token = existingToken,
                     Expiration = DateTime.UtcNow.AddMinutes(2) // Defina a expiração do token conforme necessário
                 };
@@ -84,11 +90,13 @@ public class UserController : ControllerBase
             else
             {
                 // Gerar um novo token e armazená-lo no Redis
+                _logger.LogInformation("Novo token gerado.");
                 return await BuildAndStoreToken(userInfo); //Armazena através do BuildAndStoreToken
             }
         }
         else
         {
+            _logger.LogWarning("Falha ao logar.");
             ModelState.AddModelError(string.Empty, "Login inválido.");
             return BadRequest(ModelState);
         }
@@ -124,10 +132,12 @@ public class UserController : ControllerBase
 
         if (success)
         {
+            _logger.LogInformation("Role atribuida com sucesso.");
             return Ok("Role 'User' atribuída ao usuário com sucesso.");
         }
         else
         {
+            _logger.LogInformation("Não foi possível atribur a role.");
             return BadRequest("Não foi possível atribuir a role 'User' ao usuário.");
         }
     }
