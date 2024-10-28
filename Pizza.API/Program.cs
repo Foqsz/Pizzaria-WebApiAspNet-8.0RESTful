@@ -25,6 +25,7 @@ builder.Services.AddControllers()
         options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
     });
 
+#region Swagger INFO
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -73,6 +74,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+#endregion
 
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
