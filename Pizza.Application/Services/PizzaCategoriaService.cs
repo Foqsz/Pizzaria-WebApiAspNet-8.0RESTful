@@ -28,7 +28,7 @@ public class PizzaCategoriaService : IPizzaCategoriaService
     {
         var categoriasAll = await _pizzaCategoriaRepository.GetCategoriasPizza();
         return _mapper.Map<IEnumerable<PizzaCategoriaDTO>>(categoriasAll);
-    } 
+    }
 
     public async Task<PizzaCategoriaDTO> GetCategoriaCreate(PizzaCategoriaDTO pizzaCategoriaDTO)
     {
@@ -55,7 +55,7 @@ public class PizzaCategoriaService : IPizzaCategoriaService
 
     public async Task<PizzaCategoriaDTO> GetCategoriaRemove(int id)
     {
-        var cattegoriaRemove = await _pizzaCategoriaRepository.GetCategoriaRemove(id); 
+        var cattegoriaRemove = await _pizzaCategoriaRepository.GetCategoriaRemove(id);
         return _mapper.Map<PizzaCategoriaDTO>(cattegoriaRemove);
-    } 
+    }
 }

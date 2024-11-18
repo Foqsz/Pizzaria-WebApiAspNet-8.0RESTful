@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pizzaria-WebApiAspNet-8.0RESTful")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad5b2a93d399fe8f517eb6472dd688c273779ab4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86ae27fa8307f82562d9cb3d6c0ab7c7cb240ec8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pizzaria-WebApiAspNet-8.0RESTful")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pizzaria-WebApiAspNet-8.0RESTful")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
